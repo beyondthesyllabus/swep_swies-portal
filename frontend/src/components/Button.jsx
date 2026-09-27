@@ -1,11 +1,11 @@
 import React from "react";
 
 const VARIANTS = {
-  primary: "bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-500 hover:to-teal-600 text-white shadow-sm hover:shadow-glow transition-all duration-200 active:scale-[0.98]",
-  secondary: "bg-slate-900 hover:bg-slate-800 text-white shadow-sm transition-all duration-200 active:scale-[0.98]",
+  primary: "bg-teal-600 hover:bg-teal-700 text-white shadow-sm transition-all duration-200 active:scale-[0.98]",
+  secondary: "bg-slate-100 hover:bg-slate-200 text-slate-800 shadow-sm transition-all duration-200 active:scale-[0.98]",
   ghost: "bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 border border-slate-200/80 transition-all duration-200 active:scale-[0.98]",
-  outline: "border border-teal-600/30 text-teal-700 hover:bg-teal-50 hover:border-teal-600/60 transition-all duration-200 active:scale-[0.98]",
-  danger: "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white shadow-sm transition-all duration-200 active:scale-[0.98]",
+  outline: "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 active:scale-[0.98]",
+  danger: "bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition-all duration-200 active:scale-[0.98]",
 };
 
 const SIZES = {

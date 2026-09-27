@@ -12,7 +12,6 @@ import {
   BarChart3,
   LogOut,
   QrCode,
-  Sparkles,
 } from "lucide-react";
 
 const LINKS = [
@@ -30,25 +29,22 @@ export default function Sidebar() {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="sticky top-0 flex h-screen w-64 flex-col justify-between bg-slate-900 text-slate-200 border-r border-slate-800 shadow-xl z-20 shrink-0">
+    <aside className="sticky top-0 z-20 flex h-screen w-64 shrink-0 flex-col justify-between border-r border-slate-200 bg-white text-slate-700">
       <div>
-        {/* Brand Header */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-800/80">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-teal-600 to-emerald-500 text-white shadow-glow">
+        {/* Brand header */}
+        <div className="flex items-center gap-3 border-b border-slate-100 px-6 py-5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white">
             <QrCode className="h-5 w-5 stroke-[2.2]" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-display text-lg font-bold text-white tracking-tight">SWEP / SWIES</span>
-              <Sparkles className="h-3.5 w-3.5 text-teal-400" />
-            </div>
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-400/90">Admin Console</p>
+            <span className="font-display block text-lg font-bold tracking-tight text-slate-900">SWEP / SWIES</span>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600">Admin Console</p>
           </div>
         </div>
 
-        {/* Navigation Links */}
+        {/* Navigation */}
         <nav className="flex flex-col gap-1 px-3.5 py-5">
-          <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-slate-500">Navigation</p>
+          <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">Navigation</p>
           {LINKS.map((link) => {
             const Icon = link.icon;
             return (
@@ -57,16 +53,16 @@ export default function Sidebar() {
                 to={link.to}
                 end={link.to === "/admin"}
                 className={({ isActive }) =>
-                  `group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                  `group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold transition-colors ${
                     isActive
-                      ? "bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-sm shadow-teal-900/50"
-                      : "text-slate-400 hover:bg-slate-800/70 hover:text-slate-100"
+                      ? "bg-teal-50 text-teal-700"
+                      : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                   }`
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <Icon className={`h-4.5 w-4.5 shrink-0 transition-transform duration-200 group-hover:scale-110 ${isActive ? "text-white" : "text-slate-400 group-hover:text-teal-400"}`} />
+                    <Icon className={`h-[18px] w-[18px] shrink-0 ${isActive ? "text-teal-600" : "text-slate-400 group-hover:text-teal-600"}`} />
                     <span>{link.label}</span>
                   </>
                 )}
@@ -76,22 +72,22 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* Footer / User Info */}
-      <div className="border-t border-slate-800/80 p-4">
-        <div className="flex items-center justify-between rounded-xl bg-slate-800/60 p-3 backdrop-blur-sm border border-slate-700/50">
+      {/* Footer / user */}
+      <div className="border-t border-slate-100 p-4">
+        <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-3">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-500/20 text-teal-300 font-bold border border-teal-500/30">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-600 font-bold text-white">
               {user?.username?.[0]?.toUpperCase() || "A"}
             </div>
             <div className="truncate">
-              <p className="text-xs font-bold text-white truncate">{user?.username}</p>
-              <p className="text-[10px] text-teal-400 font-medium">Administrator</p>
+              <p className="truncate text-xs font-bold text-slate-900">{user?.username}</p>
+              <p className="text-[10px] font-medium text-teal-600">Administrator</p>
             </div>
           </div>
           <button
             onClick={logout}
             title="Sign out"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-500/20 hover:text-rose-400 transition-colors"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-600"
           >
             <LogOut className="h-4 w-4" />
           </button>

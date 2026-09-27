@@ -5,7 +5,7 @@ import Card from "../../components/Card";
 import Button from "../../components/Button";
 import { cacheRoster, getCachedRoster, queueScan, isAlreadyRecorded, getRecordedForSession, clearSessionData } from "../../offline/db";
 import { trySync, startAutoSync } from "../../offline/sync";
-import { QrCode, LogIn, LogOut, CheckCircle2, AlertTriangle, Search, UserCheck, ShieldAlert, X } from "lucide-react";
+import { QrCode, LogIn, LogOut, CheckCircle2, AlertTriangle, Search } from "lucide-react";
 
 const DEBOUNCE_MS = 2500;
 const MANUAL_REASONS = ["Card forgotten", "Card damaged", "Card lost", "Camera failure", "Other"];
@@ -158,19 +158,18 @@ export default function ScanScreen() {
 
   if (!session) {
     return (
-      <div className="watermark-dark relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-950 px-4 py-12">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="mx-auto w-full max-w-md z-10 animate-fade-in space-y-6">
+      <div className="flex min-h-screen flex-col justify-center bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-12">
+        <div className="mx-auto w-full max-w-md space-y-6">
           <div className="text-center">
-            <h1 className="font-display text-2xl font-bold text-white">Select Attendance Session</h1>
-            <p className="text-xs text-slate-400 mt-1">Choose an active session to initialize scanning</p>
+            <h1 className="font-display text-2xl font-bold text-slate-900">Select Attendance Session</h1>
+            <p className="mt-1 text-xs text-slate-500">Choose an active session to initialize scanning</p>
           </div>
-          <Card className="glass-dark border-slate-800 text-white p-6 space-y-3">
+          <Card className="border-slate-200 bg-white p-6 shadow-sm space-y-3">
             {sessions.length === 0 ? (
-              <div className="text-center py-6 text-slate-400">
-                <QrCode className="mx-auto h-10 w-10 stroke-1 mb-2 text-slate-500" />
-                <p className="text-sm font-semibold">No open sessions found</p>
-                <p className="text-xs text-slate-500 mt-1">Ask your administrator to initialize a session for your scope.</p>
+              <div className="py-6 text-center text-slate-400">
+                <QrCode className="mx-auto mb-2 h-10 w-10 stroke-1 text-slate-300" />
+                <p className="text-sm font-semibold text-slate-600">No open sessions found</p>
+                <p className="mt-1 text-xs text-slate-400">Ask your administrator to initialize a session for your scope.</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -178,13 +177,13 @@ export default function ScanScreen() {
                   <button
                     key={s.id}
                     onClick={() => selectSession(s)}
-                    className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-700/60 bg-slate-900/60 hover:bg-slate-800 hover:border-teal-500/50 transition-all text-left"
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white p-4 text-left transition-colors hover:border-teal-400 hover:bg-teal-50/40"
                   >
                     <div>
-                      <p className="font-bold text-white text-sm">{s.activity_name}</p>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">{s.held_on} • {s.department_name}</p>
+                      <p className="text-sm font-bold text-slate-900">{s.activity_name}</p>
+                      <p className="mt-0.5 font-mono text-xs text-slate-500">{s.held_on} • {s.department_name}</p>
                     </div>
-                    <span className="text-xs font-bold text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded-full border border-teal-500/20">
+                    <span className="rounded-full border border-teal-200 bg-teal-50 px-2.5 py-1 text-xs font-bold text-teal-700">
                       Start Scanning
                     </span>
                   </button>
@@ -198,35 +197,35 @@ export default function ScanScreen() {
   }
 
   return (
-    <div className="watermark-dark relative mx-auto flex min-h-screen max-w-lg flex-col justify-between bg-slate-950 px-4 py-6 text-white">
-      {/* Top Toggle & Control Bar */}
+    <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-between bg-slate-50 px-4 py-6 text-slate-900">
+      {/* Top control bar */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between bg-slate-900/80 p-3 rounded-2xl border border-slate-800">
+        <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-teal-400">Live Session HUD</span>
-            <h2 className="font-display text-sm font-bold text-white">{session.activity_name}</h2>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-teal-600">Live Session</span>
+            <h2 className="font-display text-sm font-bold text-slate-900">{session.activity_name}</h2>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-bold text-slate-300 bg-slate-800 px-3 py-1 rounded-xl border border-slate-700">
+            <span className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-xs font-bold text-slate-700">
               {recordedCount} Scans
             </span>
             <button
               onClick={finishSession}
-              className="text-xs font-semibold text-rose-400 hover:bg-rose-500/10 px-2.5 py-1 rounded-xl transition-colors border border-rose-500/20"
+              className="rounded-xl border border-rose-200 px-2.5 py-1 text-xs font-semibold text-rose-600 transition-colors hover:bg-rose-50"
             >
               Finish
             </button>
           </div>
         </div>
 
-        {/* Direction Tabs */}
-        <div className="grid grid-cols-2 gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-800">
+        {/* Direction tabs */}
+        <div className="grid grid-cols-2 gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm">
           <button
             onClick={() => setDirection("in")}
-            className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${
+            className={`flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-colors ${
               direction === "in"
-                ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow"
-                : "text-slate-400 hover:text-white hover:bg-slate-800"
+                ? "bg-emerald-600 text-white"
+                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
             }`}
           >
             <LogIn className="h-4 w-4" />
@@ -234,10 +233,10 @@ export default function ScanScreen() {
           </button>
           <button
             onClick={() => setDirection("out")}
-            className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all ${
+            className={`flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-colors ${
               direction === "out"
-                ? "bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-glow"
-                : "text-slate-400 hover:text-white hover:bg-slate-800"
+                ? "bg-amber-500 text-white"
+                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
             }`}
           >
             <LogOut className="h-4 w-4" />
@@ -245,61 +244,59 @@ export default function ScanScreen() {
           </button>
         </div>
 
-        {/* Camera Reticle Viewfinder */}
-        <div className="relative overflow-hidden rounded-3xl bg-black border-2 border-slate-800 aspect-square shadow-2xl flex items-center justify-center">
-          <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
-          
-          {/* HUD Target Overlay */}
-          <div className="pointer-events-none absolute inset-8 border-2 border-dashed border-teal-400/60 rounded-3xl flex flex-col items-center justify-between p-4">
-            <span className="text-[10px] font-bold tracking-widest text-teal-300 uppercase bg-slate-950/80 px-3 py-1 rounded-full border border-teal-500/30">
+        {/* Camera viewfinder (dark by nature — it is the live feed) */}
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-3xl border-2 border-slate-200 bg-slate-900 shadow-sm">
+          <video ref={videoRef} autoPlay playsInline muted className="h-full w-full object-cover" />
+          <div className="pointer-events-none absolute inset-8 flex flex-col items-center justify-between rounded-3xl border-2 border-dashed border-teal-400/70 p-4">
+            <span className="rounded-full bg-slate-950/80 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-teal-300">
               Align Student QR Card
             </span>
-            <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-teal-400 to-transparent animate-pulse" />
-            <span className="text-[10px] font-mono text-slate-400">
+            <div className="h-0.5 w-full animate-pulse bg-gradient-to-r from-transparent via-teal-400 to-transparent" />
+            <span className="font-mono text-[10px] text-slate-300">
               Direction: <span className="font-bold text-white uppercase">{direction}</span>
             </span>
           </div>
         </div>
 
-        {/* Last Result Toast Card */}
+        {/* Last result toast */}
         {lastResult && (
-          <div className={`p-4 rounded-2xl border flex items-center gap-4 animate-slide-up ${
-            lastResult.ok ? "bg-emerald-950/90 border-emerald-500/40 text-emerald-100" : "bg-rose-950/90 border-rose-500/40 text-rose-100"
+          <div className={`flex items-center gap-4 rounded-2xl border p-4 ${
+            lastResult.ok ? "border-emerald-200 bg-emerald-50 text-emerald-900" : "border-rose-200 bg-rose-50 text-rose-900"
           }`}>
             {lastResult.student?.photo ? (
-              <img src={lastResult.student.photo} alt="" className="h-16 w-16 rounded-xl object-cover border-2 border-white/20 shadow-md shrink-0" />
+              <img src={lastResult.student.photo} alt="" className="h-16 w-16 shrink-0 rounded-xl border-2 border-white object-cover shadow-sm" />
             ) : (
-              <div className="h-16 w-16 rounded-xl bg-slate-800 flex items-center justify-center font-bold text-2xl text-slate-400 shrink-0">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white text-2xl font-bold text-slate-400">
                 {lastResult.student?.name?.[0] || "?"}
               </div>
             )}
-            <div className="flex-1 min-w-0">
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
-                {lastResult.ok ? <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" /> : <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />}
-                <p className="font-bold text-sm truncate">{lastResult.student?.name || "Scan Unrecognised"}</p>
+                {lastResult.ok ? <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" /> : <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600" />}
+                <p className="truncate text-sm font-bold">{lastResult.student?.name || "Scan Unrecognised"}</p>
               </div>
               {lastResult.student?.reg_no && (
-                <p className="font-mono text-xs text-teal-300 mt-0.5">{lastResult.student.reg_no}</p>
+                <p className="mt-0.5 font-mono text-xs text-teal-700">{lastResult.student.reg_no}</p>
               )}
-              {lastResult.message && <p className="text-xs text-slate-300 mt-1">{lastResult.message}</p>}
+              {lastResult.message && <p className="mt-1 text-xs text-slate-600">{lastResult.message}</p>}
             </div>
           </div>
         )}
       </div>
 
-      {/* Manual Entry Drawer */}
-      <div className="mt-4 pt-4 border-t border-slate-800 space-y-3">
+      {/* Manual entry drawer */}
+      <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
         <Button
           variant="outline"
           onClick={() => setShowManual((v) => !v)}
-          className="w-full py-3 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-900"
+          className="w-full py-3"
           icon={Search}
         >
           {showManual ? "Close Manual Entry" : "Manual Override Entry"}
         </Button>
 
         {showManual && (
-          <div className="rounded-2xl bg-white p-4 text-slate-900 space-y-3 shadow-2xl animate-fade-in">
+          <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="relative">
               <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
               <input
@@ -307,7 +304,7 @@ export default function ScanScreen() {
                 value={manualQuery}
                 onChange={(e) => setManualQuery(e.target.value)}
                 placeholder="Search by student name or reg. number…"
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 py-2 text-sm font-semibold outline-none focus:border-teal-500"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm font-semibold outline-none focus:border-teal-500 focus:bg-white"
               />
             </div>
             <div className="max-h-48 space-y-1.5 overflow-y-auto">
@@ -325,18 +322,18 @@ export default function ScanScreen() {
 function ManualRow({ student, onPick }) {
   const [picking, setPicking] = useState(false);
   return (
-    <div className="rounded-xl border border-slate-200 p-2.5 bg-slate-50/60 hover:bg-slate-100 transition-colors">
-      <button className="w-full text-left flex items-center justify-between text-xs font-bold text-slate-900" onClick={() => setPicking((v) => !v)}>
+    <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 transition-colors hover:bg-slate-100">
+      <button className="flex w-full items-center justify-between text-left text-xs font-bold text-slate-900" onClick={() => setPicking((v) => !v)}>
         <span>{student.name}</span>
-        <span className="font-mono text-[11px] text-teal-700 font-semibold">{student.reg_no}</span>
+        <span className="font-mono text-[11px] font-semibold text-teal-700">{student.reg_no}</span>
       </button>
       {picking && (
-        <div className="mt-2 flex flex-wrap gap-1.5 pt-2 border-t border-slate-200">
+        <div className="mt-2 flex flex-wrap gap-1.5 border-t border-slate-200 pt-2">
           {MANUAL_REASONS.map((reason) => (
             <button
               key={reason}
               onClick={() => onPick(reason)}
-              className="rounded-lg bg-teal-50 border border-teal-200 px-2.5 py-1 text-[11px] font-bold text-teal-700 hover:bg-teal-600 hover:text-white transition-all"
+              className="rounded-lg border border-teal-200 bg-teal-50 px-2.5 py-1 text-[11px] font-bold text-teal-700 transition-colors hover:bg-teal-600 hover:text-white"
             >
               {reason}
             </button>

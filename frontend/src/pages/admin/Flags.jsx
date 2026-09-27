@@ -80,7 +80,7 @@ export default function Flags() {
                   </span>
                 </div>
 
-                <div className="rounded-xl bg-slate-900 p-3 text-slate-200 font-mono text-xs overflow-x-auto border border-slate-800">
+                <div className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs text-slate-700">
                   {JSON.stringify(flag.detail, null, 2)}
                 </div>
 

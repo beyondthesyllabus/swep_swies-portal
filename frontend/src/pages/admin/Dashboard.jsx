@@ -37,24 +37,23 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8 max-w-6xl">
-      {/* Top Banner Header */}
-      <div className="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-8 shadow-2xl border border-slate-800">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-80 h-80 bg-gradient-to-br from-teal-500/20 to-emerald-500/0 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* Top banner header */}
+      <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-teal-50/40 to-emerald-50/30 p-8 shadow-sm">
+        <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-teal-500/10 px-3.5 py-1 text-teal-300 text-xs font-semibold border border-teal-500/20 mb-3">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-3.5 py-1 text-xs font-semibold text-teal-700">
               <Sparkles className="h-3.5 w-3.5" />
               <span>SWEP / SWIES (I & II) Portal</span>
             </div>
-            <h1 className="font-display text-3xl font-bold tracking-tight">System Control Center</h1>
-            <p className="mt-1 text-sm text-slate-300">
-              Active Session Period: <span className="font-bold text-teal-400">28 September – 22 October</span>
+            <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900">System Control Center</h1>
+            <p className="mt-1 text-sm text-slate-500">
+              Active Session Period: <span className="font-bold text-teal-700">28 September – 22 October</span>
             </p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               to="/admin/sessions"
-              className="inline-flex items-center gap-2 rounded-xl bg-teal-500 px-4 py-2.5 text-sm font-bold text-slate-950 hover:bg-teal-400 transition-all shadow-glow"
+              className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-teal-700"
             >
               <Clock className="h-4 w-4" />
               <span>Manage Sessions</span>

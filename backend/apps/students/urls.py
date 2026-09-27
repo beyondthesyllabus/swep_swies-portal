@@ -5,7 +5,7 @@ from .views import (
     StudentViewSet, CardSerializer, RosterReferenceViewSet,
     import_roster, import_roster_reference, print_card_sheet,
     register_student, list_pending_registrations, approve_registration, reject_registration,
-    request_login_code, verify_login_code, self_service_reissue_card,
+    request_login_code, verify_login_code, self_service_reissue_card, self_service_me,
 )
 from .models import Card
 
@@ -40,5 +40,6 @@ urlpatterns = [
     # Phase 6 — student self-service (lost-card recovery)
     path("self-service/request-code/", request_login_code, name="request-login-code"),
     path("self-service/verify-code/", verify_login_code, name="verify-login-code"),
+    path("self-service/me/", self_service_me, name="self-service-me"),
     path("self-service/reissue-card/", self_service_reissue_card, name="self-service-reissue"),
 ] + router.urls

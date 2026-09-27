@@ -333,6 +333,36 @@ def _student_from_session_token(request):
     return Student.objects.filter(id=student_id, status=Student.Status.APPROVED).first()
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def self_service_me(request):
+    """
+    GET, header X-Student-Session: <token from verify_login_code>.
+    Returns the signed-in student's own profile and card status so the
+    student portal can show an account view. Never exposes the raw card
+    token (it is stored only as a hash and cannot be re-shown).
+    """
+    student = _student_from_session_token(request)
+    if not student:
+        return Response({"detail": "Your session has expired — request a new login code."}, status=401)
+
+    card = student.cards.order_by("-issued_at").first()
+    return Response({
+        "reg_no": student.reg_no,
+        "first_name": student.first_name,
+        "surname": student.surname,
+        "other_names": student.other_names,
+        "email": student.email,
+        "department": student.department.name if student.department else "",
+        "level": student.level.name if student.level else "",
+        "status": student.status,
+        "card": {
+            "issued_at": card.issued_at if card else None,
+            "active": card.is_active if card else False,
+        } if card else None,
+    })
+
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def self_service_reissue_card(request):

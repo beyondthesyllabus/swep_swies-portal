@@ -1,18 +1,19 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import publicClient from "../../api/publicClient";
 import useReferenceData from "../../api/useReferenceData";
 import Card from "../../components/Card";
 import Select from "../../components/Select";
 import Button from "../../components/Button";
 import {
-  Camera, CheckCircle2, User, Mail, GraduationCap, AlertCircle, RefreshCw,
-  QrCode, IdCard, Building2, Hash, ShieldCheck, FileBadge,
+  Camera, CheckCircle2, User, Mail, AlertCircle, RefreshCw,
+  Building2, Hash, ShieldCheck, FileBadge, IdCard, ArrowLeft,
 } from "lucide-react";
 
 const inputClass =
-  "w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm font-semibold text-slate-900 " +
+  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900 " +
   "placeholder:text-slate-400 placeholder:font-medium outline-none transition-all " +
-  "focus:border-teal-500 focus:bg-white focus:ring-4 focus:ring-teal-500/10";
+  "focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10";
 
 function FieldLabel({ icon: Icon, children, hint }) {
   return (
@@ -29,7 +30,7 @@ function FieldLabel({ icon: Icon, children, hint }) {
 function SectionHeading({ step, title, subtitle }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-[12px] font-bold text-white shadow-sm">
+      <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-600 text-[12px] font-bold text-white">
         {step}
       </span>
       <div>
@@ -113,27 +114,26 @@ export default function Register() {
 
   if (result?.type === "success") {
     return (
-      <div className="watermark-dark relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-4 py-12">
-        <div className="pointer-events-none absolute top-1/4 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-teal-500/10 blur-3xl" />
-        <Card className="glass-dark animate-slide-up z-10 w-full max-w-lg border-emerald-500/30 p-8 text-center text-white shadow-2xl">
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 shadow-glow">
-            <CheckCircle2 className="h-9 w-9 stroke-[2.5]" />
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-12">
+        <Card className="w-full max-w-lg border-slate-200 bg-white p-8 text-center shadow-sm">
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+            <CheckCircle2 className="h-9 w-9 stroke-[2.2]" />
           </div>
-          <h1 className="font-display mb-2 text-2xl font-bold text-white">Registration Received</h1>
-          <p className="mb-6 text-sm leading-relaxed text-slate-300">{result.text}</p>
+          <h1 className="font-display mb-2 text-2xl font-bold text-slate-900">Registration Received</h1>
+          <p className="mb-6 text-sm leading-relaxed text-slate-500">{result.text}</p>
 
-          <div className="mb-6 space-y-2 rounded-xl border border-slate-800 bg-slate-900/80 p-4 text-left text-xs">
+          <div className="mb-6 space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-4 text-left text-xs">
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Registration No.</span>
-              <span className="font-mono font-bold text-teal-400">{form.reg_no}</span>
+              <span className="font-mono font-bold text-teal-700">{form.reg_no}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Full Name</span>
-              <span className="font-semibold text-slate-200">{form.first_name} {form.surname}</span>
+              <span className="font-semibold text-slate-800">{form.first_name} {form.surname}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-slate-500">Cohort</span>
-              <span className="font-semibold text-slate-200">
+              <span className="font-semibold text-slate-800">
                 Level {levels.find((l) => String(l.value) === String(form.level))?.label ?? form.level}
               </span>
             </div>
@@ -142,32 +142,32 @@ export default function Register() {
           <p className="text-xs leading-relaxed text-slate-400">
             You will receive an email notification once an administrator reviews your registration and issues your attendance card.
           </p>
+
+          <Link to="/" className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 hover:text-teal-700 hover:underline">
+            <ArrowLeft className="h-3.5 w-3.5" /> Back to Student Portal
+          </Link>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="watermark-dark relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-4 py-12">
-      {/* Ambient background orbs */}
-      <div className="pointer-events-none absolute left-10 top-10 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-10 right-10 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
-
-      <form onSubmit={handleSubmit} className="animate-fade-in z-10 w-full max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-12">
+      <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl">
         {/* Institutional header */}
         <header className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl border border-teal-500/30 bg-slate-900/80 shadow-glow">
+          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <img src="/faculty.png" alt="Faculty crest" className="h-full w-full object-contain p-2" />
           </div>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-4 py-1.5 text-xs font-semibold text-teal-300">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-xs font-semibold text-teal-700">
             <ShieldCheck className="h-3.5 w-3.5" />
             <span>Official SWEP / SWIES Student Enrolment</span>
           </div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Student Registration</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Student Registration</h1>
           <p className="mt-2 text-xs font-medium uppercase tracking-widest text-slate-400">Phase 1 Enrolment Portal</p>
         </header>
 
-        <Card className="space-y-7 border-slate-200/80 bg-white/95 p-6 shadow-2xl backdrop-blur-xl sm:p-9">
+        <Card className="space-y-7 border-slate-200 bg-white p-6 shadow-sm sm:p-9">
           {/* Section 1 — Academic record */}
           <section className="space-y-3">
             <SectionHeading
@@ -226,7 +226,7 @@ export default function Register() {
               subtitle="Select your current academic level and department of enrolment."
             />
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-slate-200 bg-slate-50/70 transition-colors focus-within:border-teal-500 focus-within:bg-white">
+              <div className="rounded-xl border border-slate-200 bg-white transition-colors focus-within:border-teal-500">
                 <Select
                   label="Academic Level"
                   value={form.level}
@@ -235,7 +235,7 @@ export default function Register() {
                   placeholder="Select level…"
                 />
               </div>
-              <div className="rounded-xl border border-slate-200 bg-slate-50/70 transition-colors focus-within:border-teal-500 focus-within:bg-white">
+              <div className="rounded-xl border border-slate-200 bg-white transition-colors focus-within:border-teal-500">
                 <Select
                   label="Department"
                   value={form.department}
@@ -274,19 +274,19 @@ export default function Register() {
             </div>
 
             {photoDataUrl ? (
-              <div className="relative flex items-center justify-center rounded-2xl border border-slate-800 bg-slate-900 p-4">
+              <div className="relative flex items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <img
                   src={photoDataUrl}
                   alt="Captured enrolment photo"
-                  className="h-44 w-44 rounded-xl border-2 border-teal-500 object-cover shadow-glow"
+                  className="h-44 w-44 rounded-xl border-2 border-teal-500 object-cover"
                 />
-                <div className="absolute bottom-6 rounded-full bg-teal-600/90 px-3 py-1 text-[11px] font-bold text-white shadow-md backdrop-blur-md">
+                <div className="absolute bottom-6 rounded-full bg-teal-600 px-3 py-1 text-[11px] font-bold text-white shadow-sm">
                   Photo Captured ✓
                 </div>
               </div>
             ) : cameraOn ? (
-              <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-900 p-3 text-center">
-                <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-black">
+              <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-3 text-center">
+                <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-slate-900">
                   <video ref={videoRef} autoPlay playsInline className="h-full w-full object-cover" />
                   <div className="pointer-events-none absolute inset-6 flex items-center justify-center rounded-2xl border-2 border-dashed border-teal-400/70">
                     <span className="rounded-full bg-slate-900/80 px-2 py-0.5 text-[10px] font-bold text-teal-300">Centre Face Here</span>
@@ -310,13 +310,20 @@ export default function Register() {
             </div>
           )}
 
-          <Button type="submit" loading={submitting} className="mt-1 w-full py-3.5 text-base shadow-glow" icon={FileBadge}>
+          <Button type="submit" loading={submitting} className="mt-1 w-full py-3.5 text-base" icon={FileBadge}>
             Submit Registration
           </Button>
 
           <p className="flex items-center justify-center gap-1.5 text-center text-[11px] font-medium text-slate-400">
             <IdCard className="h-3.5 w-3.5 text-teal-600" />
             Your details are matched against the official class list before a card is issued.
+          </p>
+
+          <p className="text-center text-xs text-slate-500">
+            Already enrolled?{" "}
+            <Link to="/" className="font-bold text-teal-600 hover:text-teal-700 hover:underline">
+              Sign in to the Student Portal
+            </Link>
           </p>
         </Card>
       </form>

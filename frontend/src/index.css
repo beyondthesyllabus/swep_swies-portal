@@ -37,47 +37,6 @@
     border: 1px solid rgba(226, 232, 240, 0.8);
   }
 
-  .glass-dark {
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  /* Faculty watermark — dark backgrounds (login, register, scanner) */
-  .watermark-dark {
-    position: relative;
-  }
-  .watermark-dark::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("/faculty.png");
-    background-repeat: repeat;
-    background-position: center center;
-    background-size: 170px;
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Faculty watermark — light backgrounds (admin main area) */
-  .watermark-light {
-    position: relative;
-  }
-  .watermark-light::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("/faculty.png");
-    background-repeat: repeat;
-    background-position: center center;
-    background-size: 190px;
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .text-gradient {
     @apply bg-gradient-to-r from-slate-900 via-teal-900 to-slate-800 bg-clip-text text-transparent;
   }
