@@ -73,3 +73,4 @@ _scan_preview/
 .DS_Store
 Thumbs.db
 desktop.ini
+frontend/vite.config.js.timestamp-*.mjs
